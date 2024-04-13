@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form</title>
+</head>
+<body>
+    <h1>User Form</h1>
+    <form action="/submit" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" value="<%= firstName %>" required>
+        <br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+        <br>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required>
+        <br>
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+        <br>
+        <input type="hidden" name="ipAddress" value="<%= ip %>">
+        <input type="hidden" name="deviceType" value="<%= type %>">
+        <input type="hidden" name="browser" value="<%= browser %>">
+        <input type="hidden" name="userAgent" value="<%= userAgent %>">
+        
+        <h2>Previous Addresses</h2>
+        <div id="addresses">
+            <div class="address">
+                <label for="address1">Address:</label>
+                <input type="text" name="previousAddresses[0].address" required>
+                <button type="button" onclick="addAddress()">Add Another Address</button>
+            </div>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        function addAddress() {
+            const addresses = document.getElementById('addresses');
+            const addressCount = addresses.querySelectorAll('.address').length;
+            const newAddress = document.createElement('div');
+            newAddress.classList.add('address');
+            newAddress.innerHTML = `
+                <label for="address${addressCount + 1}">Address:</label>
+                <input type="text" name="previousAddresses[${addressCount}].address" required>
+                <button type="button" onclick="removeAddress(this)">Remove Address</button>
+            `;
+            addresses.appendChild(newAddress);
+        }
+
+        function removeAddress(btn) {
+            const address = btn.parentElement;
+            address.remove();
+        }
+    </script>
+</body>
+</html>
